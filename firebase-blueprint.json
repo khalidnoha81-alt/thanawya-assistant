@@ -1,0 +1,102 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Student profile data for Thanaweya Amma platform",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Student Firebase Auth UID" },
+        "email": { "type": "string", "description": "Student email address" },
+        "displayName": { "type": "string", "description": "Full student name" },
+        "studySection": { "type": "string", "description": "Academic division: science, math, or literary" },
+        "targetCollege": { "type": "string", "description": "Target college or dream faculty" },
+        "targetEnglishScore": { "type": "number", "description": "Target English score out of 50" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "description": "Last update timestamp" }
+      },
+      "required": ["uid", "email", "displayName"]
+    },
+    "QuestionHistory": {
+      "title": "QuestionHistory",
+      "description": "Log of questions solved by the student across all sections",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique history item ID" },
+        "userId": { "type": "string", "description": "Owner student UID" },
+        "category": { "type": "string", "description": "Question category: translation, rewrite, grammar, vocabulary, reading, writing, assistant" },
+        "prompt": { "type": "string", "description": "Question prompt or input text" },
+        "hasImage": { "type": "boolean", "description": "Whether an image/OCR was used" },
+        "solution": { "type": "string", "description": "Structured AI solution" },
+        "createdAt": { "type": "string", "description": "Timestamp when solved" }
+      },
+      "required": ["id", "userId", "category", "prompt", "solution"]
+    },
+    "SavedItem": {
+      "title": "SavedItem",
+      "description": "Bookmarked rules, flashcards, or important exam tips",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Bookmark ID" },
+        "userId": { "type": "string", "description": "Owner student UID" },
+        "category": { "type": "string", "description": "Category: vocab, rule, translation, exam_tip" },
+        "title": { "type": "string", "description": "Bookmark title" },
+        "content": { "type": "string", "description": "Bookmark detailed content" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["id", "userId", "category", "title", "content"]
+    },
+    "ExamAttempt": {
+      "title": "ExamAttempt",
+      "description": "Record of student attempt in the Thanaweya Amma Exam Simulator",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Exam attempt ID" },
+        "userId": { "type": "string", "description": "Owner student UID" },
+        "examTitle": { "type": "string", "description": "Title of the simulated exam" },
+        "score": { "type": "number", "description": "Score obtained" },
+        "totalScore": { "type": "number", "description": "Maximum score (e.g. 50)" },
+        "timeSpentSeconds": { "type": "number", "description": "Duration spent in seconds" },
+        "breakdown": { "type": "string", "description": "JSON string of section scores" },
+        "feedback": { "type": "string", "description": "AI teacher feedback and improvement plan" },
+        "createdAt": { "type": "string", "description": "Submission timestamp" }
+      },
+      "required": ["id", "userId", "score", "totalScore", "timeSpentSeconds"]
+    },
+    "ProgressStats": {
+      "title": "ProgressStats",
+      "description": "Aggregated stats for the student dashboard",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner student UID" },
+        "questionsSolved": { "type": "number", "description": "Total solved questions count" },
+        "accuracyRate": { "type": "number", "description": "Estimated accuracy rate percentage" },
+        "streakDays": { "type": "number", "description": "Consecutive study streak in days" },
+        "weakAreas": { "type": "string", "description": "Comma-separated or JSON list of weak points" },
+        "updatedAt": { "type": "string", "description": "Last updated timestamp" }
+      },
+      "required": ["userId", "questionsSolved", "accuracyRate"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Student profile document"
+    },
+    "/users/{userId}/history/{historyId}": {
+      "schema": "QuestionHistory",
+      "description": "History of solved questions for student"
+    },
+    "/users/{userId}/saved/{savedId}": {
+      "schema": "SavedItem",
+      "description": "Student saved items and bookmarks"
+    },
+    "/users/{userId}/exams/{examId}": {
+      "schema": "ExamAttempt",
+      "description": "Simulated exam submissions and feedback"
+    },
+    "/users/{userId}/progress/stats": {
+      "schema": "ProgressStats",
+      "description": "Real-time summary statistics for student"
+    }
+  }
+}

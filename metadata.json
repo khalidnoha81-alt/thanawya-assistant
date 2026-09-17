@@ -1,0 +1,10 @@
+{
+  "name": "مساعد الثانوية العامة",
+  "description": "المنصة الذكية الأولى المتخصصة لطلاب الثانوية العامة في مادة اللغة الإنجليزية - بواسطة محمد خالد",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
